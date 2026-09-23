@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Income & Turnout — Kazakhstan | PLS210</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,500;9..144,600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0d1117; --panel:#151b23; --panel2:#1b222c; --ink:#f3f0e8;
+  --muted:#9ca6b3; --line:#303946; --blue:#55a7d9; --gold:#e0b45b;
+  --green:#76b39d; --red:#d58a82;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"DM Sans",sans-serif}
+.page{
+  min-height:100vh; position:relative; padding:7vh 8vw 8vh;
+  display:flex; flex-direction:column; justify-content:center;
+  border-bottom:1px solid var(--line); overflow:hidden;
+}
+.page:before{content:"";position:absolute;inset:0;pointer-events:none;
+  background:radial-gradient(circle at 85% 15%,rgba(85,167,217,.09),transparent 28%),
+             radial-gradient(circle at 15% 85%,rgba(224,180,91,.05),transparent 25%)}
+.inner{position:relative;z-index:1;max-width:1080px;width:100%;margin:auto}
+.kicker{font:500 .78rem "DM Mono",monospace;color:var(--gold);letter-spacing:.12em;text-transform:uppercase;margin-bottom:1.4rem}
+h1,h2,h3{margin:0;line-height:1.02}
+h1{font-size:clamp(3.5rem,8vw,7.8rem);max-width:950px;letter-spacing:-.055em}
+h2{font-size:clamp(2.6rem,5vw,5.2rem);letter-spacing:-.045em;max-width:900px}
+h3{font-size:1.25rem}
+.lead{font-size:clamp(1.1rem,2vw,1.5rem);line-height:1.45;color:#d9dde2;max-width:720px;margin-top:1.5rem}
+.small{font-size:.92rem;line-height:1.55;color:var(--muted);max-width:680px}
+.mono{font-family:"DM Mono",monospace}
+.page-no{position:absolute;top:2.5rem;right:5vw;font:500 .75rem "DM Mono";color:var(--muted)}
+.progress{position:fixed;left:0;top:0;height:3px;background:var(--gold);width:0;z-index:20}
+.nav{position:fixed;right:1.7rem;top:50%;transform:translateY(-50%);z-index:10;display:flex;flex-direction:column;gap:8px}
+.nav a{width:7px;height:7px;border:1px solid var(--muted);border-radius:50%;display:block;opacity:.55}
+.nav a:hover{background:var(--gold);border-color:var(--gold);opacity:1}
+.hero-line{width:95px;height:4px;background:var(--gold);margin:2rem 0}
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1.2rem;margin-top:2.5rem}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-top:2.5rem}
+.card{background:var(--panel);border:1px solid var(--line);padding:1.5rem;border-radius:12px}
+.card .num{font:500 .75rem "DM Mono";color:var(--gold);margin-bottom:1.2rem}
+.card p{color:var(--muted);line-height:1.55;margin:.7rem 0 0}
+.big-number{font-size:clamp(3rem,7vw,6.5rem);font-weight:700;letter-spacing:-.06em}
+.arrow{color:var(--blue);font-size:2rem}
+.flow{display:flex;align-items:center;gap:1rem;flex-wrap:wrap;margin-top:2.5rem}
+.node{background:var(--panel);border:1px solid var(--line);padding:1.2rem 1.4rem;border-radius:10px;min-width:190px}
+.node strong{display:block;font-size:1.05rem}.node span{display:block;color:var(--muted);font:.72rem "DM Mono";margin-top:.5rem}
+.quote{border-left:3px solid var(--gold);padding:1rem 0 1rem 1.4rem;margin-top:2rem;font-family:Fraunces,serif;font-size:1.35rem;max-width:780px}
+.rq{font-family:Fraunces,serif;font-size:clamp(2rem,4vw,4rem);line-height:1.12;max-width:980px}
+.tag{display:inline-block;padding:.45rem .7rem;border:1px solid var(--line);border-radius:999px;color:var(--muted);font:500 .72rem "DM Mono";margin:.3rem .2rem 0 0}
+.h1box{border:1px solid var(--gold);background:rgba(224,180,91,.06);border-radius:16px;padding:2rem;margin-top:2.5rem;max-width:850px}
+.h1label{font:500 .75rem "DM Mono";color:var(--gold);letter-spacing:.12em}
+.hyp{font-family:Fraunces,serif;font-size:clamp(1.7rem,3.5vw,3.1rem);line-height:1.18;margin-top:1rem}
+.ivdv{display:flex;gap:2rem;margin-top:1.5rem;flex-wrap:wrap}
+.ivdv div{color:var(--muted)} .ivdv b{color:var(--ink)}
+.warning{border:1px dashed var(--red);padding:1.3rem 1.5rem;border-radius:12px;margin-top:2rem;max-width:800px}
+.warning b{color:var(--red)}
+.timeline{position:relative;margin-top:2.5rem;padding-left:2rem;border-left:1px solid var(--line)}
+.titem{position:relative;padding:0 0 1.7rem 1rem}
+.titem:before{content:"";position:absolute;left:-2.35rem;top:.3rem;width:9px;height:9px;background:var(--blue);border-radius:50%}
+.titem strong{display:block}.titem span{display:block;color:var(--muted);font-size:.88rem;margin-top:.25rem}
+.mapbox{height:300px;border:1px solid var(--line);border-radius:16px;background:
+  linear-gradient(135deg,transparent 47%,rgba(85,167,217,.12) 48%,transparent 49%),
+  radial-gradient(ellipse at 50% 50%,rgba(85,167,217,.08),transparent 58%),var(--panel);
+  display:flex;align-items:center;justify-content:center;text-align:center}
+.mapbox .fake-map{font-size:7rem;opacity:.12;font-weight:700;letter-spacing:-.1em}
+.refs{display:grid;gap:1rem;margin-top:2rem;max-width:900px}
+.ref{padding-bottom:1rem;border-bottom:1px solid var(--line);color:#d7dbe0;font-size:.92rem;line-height:1.5}
+.ref span{color:var(--muted)}
+.dashed{border:1px dashed var(--gold);border-radius:14px;padding:1.4rem;background:rgba(224,180,91,.035)}
+.footer-note{position:absolute;bottom:2rem;left:8vw;color:var(--muted);font:500 .7rem "DM Mono"}
+@media(max-width:800px){
+ .page{padding:6rem 7vw}.grid,.grid3{grid-template-columns:1fr}
+ .nav{display:none}.flow{align-items:stretch}.node{min-width:100%}.arrow{transform:rotate(90deg);text-align:center}
+}
+</style>
+</head>
+<body>
+<div class="progress"></div>
+<div class="nav"><a href="#p1"></a><a href="#p2"></a><a href="#p3"></a><a href="#p4"></a><a href="#p5"></a><a href="#p6"></a><a href="#p7"></a><a href="#p8"></a><a href="#p9"></a><a href="#p10"></a><a href="#p11"></a><a href="#p12"></a></div>
+
+<section class="page" id="p1"><div class="page-no">01 / 12</div><div class="inner">
+<div class="kicker">Research question · Abubakir Askynbay</div>
+<div class="rq">“What is the relationship between average regional income per capita and voter turnout rates across Kazakhstan's 20 subnational units in the 23 August 2026 Kurultai election?”</div>
+<div style="margin-top:2rem"><span class="tag">empirical</span><span class="tag">regional level</span><span class="tag">Kazakhstan</span><span class="tag">2026 election</span></div>
+</div></section>
+
+<section class="page" id="p2"><div class="page-no">02 / 12</div><div class="inner">
+<div class="kicker">Research design</div><h2>What am I<br>comparing?</h2>
+<div class="flow">
+<div class="node"><strong>Regional income</strong><span>INDEPENDENT VARIABLE</span></div>
+<div class="arrow">→</div>
+<div class="node"><strong>Regional turnout</strong><span>DEPENDENT VARIABLE</span></div>
+</div>
+<div class="quote">The unit of analysis is the region — not the individual voter.</div>
+<div class="small">The study tests whether higher-income regions tend to have higher turnout rates. It does not claim that every higher-income individual votes.</div>
+</div></section>
+
+<section class="page" id="p3"><div class="page-no">03 / 12</div><div class="inner">
+<div class="kicker">Epistemological positioning</div><h2>POSITIVIST</h2>
+<p class="lead">I am testing an empirical relationship between two measurable variables using observable regional data.</p>
+<div class="grid3">
+<div class="card"><div class="num">01</div><h3>Measure</h3><p>Income and turnout are observable variables.</p></div>
+<div class="card"><div class="num">02</div><h3>Hypothesize</h3><p>I predict the direction of the relationship.</p></div>
+<div class="card"><div class="num">03</div><h3>Test</h3><p>I compare the predicted relationship with data.</p></div>
+</div>
+<p class="small" style="margin-top:1.7rem">This is not primarily interpretivist: I am not asking how people understand or experience voting. It is also more than description because theory produces a testable expectation.</p>
+</div></section>
+
+<section class="page" id="p4"><div class="page-no">04 / 12</div><div class="inner">
+<div class="kicker">Contribution</div><h2>From individual<br>to regional.</h2>
+<div class="flow">
+<div class="node"><strong>Existing research</strong><span>INDIVIDUAL LEVEL</span></div><div class="arrow">→</div>
+<div class="node"><strong>My study</strong><span>REGIONAL LEVEL</span></div><div class="arrow">→</div>
+<div class="node"><strong>Kazakhstan</strong><span>20 SUBNATIONAL UNITS</span></div>
+</div>
+<p class="lead">The contribution is to examine whether socioeconomic differences between Kazakhstan's regions correspond to differences in electoral participation.</p>
+<p class="small">Aggregate data cannot establish individual-level behavior or the specific mechanism behind the relationship.</p>
+</div></section>
+
+<section class="page" id="p5"><div class="page-no">05 / 12</div><div class="inner">
+<div class="kicker">Literature review</div><h2>What does previous<br>research say?</h2>
+<div class="timeline">
+<div class="titem"><strong>Brady, Verba & Schlozman (1995)</strong><span>Higher socioeconomic status provides resources — money, time, civic skills — that can make participation easier.</span></div>
+<div class="titem"><strong>Huijsmans et al. (2022)</strong><span>Cross-national evidence connects income and voting, while showing the relationship can vary with inequality.</span></div>
+<div class="titem"><strong>Matsubayashi & Sakaiya (2021)</strong><span>Cross-national individual-level research examines income and turnout.</span></div>
+<div class="titem"><strong>Carreras & Castañeda-Angarita (2019)</strong><span>Economic conditions can affect turnout differently across socioeconomic groups.</span></div>
+<div class="titem"><strong>Zholdybalina, Yermakhanova & Akhantayeva (2026)</strong><span>Kazakhstan-specific survey research addresses civic engagement, but not income or regional turnout differences.</span></div>
+</div>
+</div></section>
+
+<section class="page" id="p6"><div class="page-no">06 / 12</div><div class="inner">
+<div class="kicker">The gap</div><h2>So what is<br><span style="color:var(--gold)">missing?</span></h2>
+<div class="grid">
+<div class="card"><div class="num">MOST OF THE LITERATURE</div><div class="big-number">INDIVIDUAL</div><p>Income and participation are commonly studied at the individual level.</p></div>
+<div class="card"><div class="num">MY QUESTION</div><div class="big-number">REGIONAL</div><p>Do income differences between Kazakhstan's regions correspond to turnout differences?</p></div>
+</div>
+<div class="quote">The remaining gap: whether regional differences in income are associated with differences in voter turnout within Kazakhstan.</div>
+</div></section>
+
+<section class="page" id="p7"><div class="page-no">07 / 12</div><div class="inner">
+<div class="kicker">Theory</div><h2>Why might income<br>matter?</h2>
+<div class="flow">
+<div class="node"><strong>More resources</strong><span>INCOME ↑</span></div><div class="arrow">→</div>
+<div class="node"><strong>Lower relative costs</strong><span>TIME · MONEY</span></div><div class="arrow">→</div>
+<div class="node"><strong>Easier participation</strong><span>VOTING COST ↓</span></div><div class="arrow">→</div>
+<div class="node"><strong>Higher turnout</strong><span>PARTICIPATION ↑</span></div>
+</div>
+<p class="small" style="margin-top:2rem">Voting can involve costs such as the time and money required to reach and participate at a polling station. Greater economic resources may make those costs easier to bear.</p>
+</div></section>
+
+<section class="page" id="p8"><div class="page-no">08 / 12</div><div class="inner">
+<div class="kicker">Hypothesis</div><div class="h1box">
+<div class="h1label">H1 · PREDICTED DIRECTION</div>
+<div class="hyp">Regions with higher average income per capita will have higher voter turnout rates.</div>
+<div class="ivdv"><div><b>IV</b><br>Average regional income per capita</div><div><b>DV</b><br>Regional voter turnout rate</div></div>
+</div>
+<p class="small" style="margin-top:1.5rem">This is an expected association, not a claim that income determines whether every individual votes.</p>
+</div></section>
+
+<section class="page" id="p9"><div class="page-no">09 / 12</div><div class="inner">
+<div class="kicker">Rival explanation</div><h2>Income may not be<br>the whole story.</h2>
+<div class="flow">
+<div class="node"><strong>Regional income</strong><span>PROPOSED EXPLANATION</span></div>
+<div class="arrow">→</div>
+<div class="node"><strong>Turnout</strong><span>PARTICIPATION</span></div>
+</div>
+<div class="flow" style="margin-top:.8rem">
+<div class="node"><strong>Infrastructure</strong><span>RIVAL EXPLANATION · ACCESS, TRANSPORT</span></div>
+<div class="arrow">→</div>
+<div class="node"><strong>Turnout</strong><span>PARTICIPATION</span></div>
+</div>
+<p class="small" style="margin-top:1rem">Both could independently produce the same regional pattern — my data can't yet tell them apart.</p>
+<div class="warning"><b>Limitation.</b> Wealthier regions may also have easier access to polling stations or better transportation. My design cannot fully distinguish this alternative explanation from the proposed resource mechanism.</div>
+</div></section>
+
+<section class="page" id="p10"><div class="page-no">10 / 12</div><div class="inner">
+<div class="kicker">Scope & limits</div><h2>What can the data<br>actually tell me?</h2>
+<div class="grid">
+<div class="card"><div class="num">CAN TEST</div><h3>Regional association</h3><p>Whether higher-income regions tend to have higher turnout.</p></div>
+<div class="card"><div class="num">CANNOT TEST</div><h3>Individual behavior</h3><p>Whether a specific higher-income person is more likely to vote.</p></div>
+<div class="card"><div class="num">CANNOT PROVE</div><h3>The mechanism</h3><p>Whether lower voting costs are actually causing the observed relationship.</p></div>
+<div class="card"><div class="num">DESIGN LIMIT</div><h3>20 observations</h3><p>The number of regional units may limit statistical power and generalizability.</p></div>
+</div>
+</div></section>
+
+<section class="page" id="p11"><div class="page-no">11 / 12</div><div class="inner">
+<div class="kicker">AI transparency + reflection</div>
+<div class="grid">
+<div class="dashed">
+<h3>AI transparency</h3>
+<p class="small">I used AI as a cognitive partner throughout the development of this proposal. We worked through my research question, literature review, theory, hypothesis, epistemological positioning, and contribution in several rounds.</p>
+<p class="mono" style="font-size:.7rem;color:var(--gold)"></p>
+</div>
+<div class="dashed">
+<h3>What working with AI helped me understand</h3>
+<p class="small">Working with AI helped me understand how a research question connects to a theory, causal mechanism, and testable hypothesis.</p>
+<p class="mono" style="font-size:.7rem;color:var(--gold)"></p>
+</div>
+</div>
+</div></section>
+
+<section class="page" id="p12"><div class="page-no">12 / 12</div><div class="inner">
+<div class="kicker">Bibliography</div><h2>References</h2>
+<div class="refs">
+<div class="ref">Brady, H. E., Verba, S., & Schlozman, K. L. (1995). Beyond SES: A resource model of political participation. <span>American Political Science Review, 89(2), 271–294.</span></div>
+<div class="ref">Huijsmans, T., Rijken, A. J., & Gaidyte, T. (2022). The income gap in voting: Moderating effects of income inequality and clientelism. <span>Political Behavior, 44(3), 1203–1223. doi.org/10.1007/s11109-020-09652-z</span></div>
+<div class="ref">Matsubayashi, T., & Sakaiya, S. (2021). Income inequality and income bias in voter turnout. <span>European Journal of Political Economy, 66, 101966. doi.org/10.1016/j.ejpoleco.2020.101966 — n = 205,138 respondents, 157 elections, 53 countries (1996–2016)</span></div>
+<div class="ref">Carreras, M., & Castañeda-Angarita, N. (2019). Economic adversity and electoral participation of vulnerable socioeconomic groups. <span>Electoral Studies, 57, 110–120. doi.org/10.1016/j.electstud.2018.11.004</span></div>
+<div class="ref">Zholdybalina, A., Yermakhanova, S., & Akhantayeva, S. (2026). Civic engagement in Kazakhstan: Patterns of political participation and the role of language. <span>Frontiers in Political Science, 8. doi.org/10.3389/fpos.2026.1776953</span></div>
+</div>
+<p class="small" style="margin-top:2rem">All five sources fetched and verified directly against the original publication or publisher record.</p>
+</div></section>
+
+<script>
+const bar=document.querySelector('.progress');
+function update(){const h=document.documentElement.scrollHeight-innerHeight;bar.style.width=(scrollY/h*100)+'%'}
+addEventListener('scroll',update); update();
+</script>
+</body>
+</html>
